@@ -44,13 +44,18 @@ int findPos(const IntList list, int x);
 int main(){
 
     IntList list = newIntList();
-    removeIt(list,100);
 	addRear(list,100);
+	removeIt(list,100);
+	display("list",list);
     addRear(list,100);
     addRear(list,-200);
 	display("list",list);
 	clear(list);
-	display("\nlist",list);
+	display("list",list);
+
+	addFront(list,100);
+    addRear(list,100);
+    display("list",list);
 
 //	printf("%d\n", findPos(list,-200));
 //	removeAll(list,100);
@@ -90,7 +95,7 @@ void destroy(IntList *list){
 
 //not sure. 
 void clear(IntList list){
-	nodeptr p = list;
+	nodeptr p = list->next;
 	nodeptr temp;
 	while(p!=NULL){
 		temp = p; 
@@ -98,7 +103,6 @@ void clear(IntList list){
 		free(temp);
 	}
 	list->next = NULL;
-	printf("Deleted Successfully");
 }
 
 void addFront(IntList list,int x){
@@ -153,15 +157,18 @@ void display(const char *name,const IntList list){
 void removeIt(IntList list,int x){
     nodeptr prev = list;
     nodeptr p = list->next;
-    while (p!=NULL) {
-        if (p->item == x) { // found it
-            prev->next = p->next;
-            free(p);
-            break;
-        }
-        prev = p;
-        p = p->next;
-    }
+    if(p!=NULL){
+    	while (p!=NULL) {
+	        if (p->item == x) { // found it
+	            prev->next = p->next;
+	            free(p);
+	            break;
+	        }
+	        prev = p;
+	        p = p->next;
+    	}
+	}
+   
 }
 
 
@@ -204,8 +211,8 @@ int findSum(const IntList list){
 void removeAll(IntList list,int x){
 	nodeptr p = list->next; 
 	nodeptr prev = list; 
-	
-	while(p!=NULL){
+	if(p!=NULL){
+		while(p!=NULL){
 		if(p->item==x){ 
 			prev->next = p->next;
 			free(p); 
@@ -214,6 +221,8 @@ void removeAll(IntList list,int x){
 		prev = p; 
 		p = p->next;	
 	}
+	}
+
 
 } // remove all occurences of x
 
@@ -290,105 +299,105 @@ int findPos(const IntList list, int x){
 
 
 //SetArray
-
-
-int isEmpty(const SetArray s){
-	int flag=1; 
-	int i; 
-	for(i=0;i<s->count;i++){
-		if(s->items[i]!=0){
-			flag=0;
-			break;  
-		}
-	}
-	return flag; 
-}
-
-int contains(SetArray s, int elem){
-	int flag=0;
-	int i;
-	for(i=0;i<s->count;i++){
-		if(s->items[i]==elem){
-			flag=1; 
-			break; 
-		}
-	}
-	return flag; 
-}
-
-int cardinality(const SetArray s){
-	return s->count;
-}
-
-SetArray getUnion(const SetArray s1,const SetArray s2){
-	SetArray result = newSetArray(); 
-	int i;
-	for(i=0;i<s1->count;i++){
-		add(result,s1->items[i]);
-	}
-	for(i=0;i<s2->count;i++){
-		add(result,s2->items[i]);
-	}
-	return result;
-}
-
-SetArray getIntersection(const SetArray s1,const SetArray s2){
-	SetArray result = newSetArray(); 
-	int i; 
-	for(i=0;i<s1->count;i++){
-		if(contains(s2,s1->items[i])){
-			add(result,s1->items[i]);
-		}
-	}
-	return result; 
-}
-
-SetArray getDifference(const SetArray s1,const SetArray s2){
-	SetArray result = newSetArray(); 
-	int i;
-	for(i=0;i<s1->count;i++){
-		if(!contains(s2,s1->items[i])){
-			add(result,s1->items[i]);
-		}
-	}
-	return result; 
-}
-
-int isSubset(const SetArray s1,const SetArray s2){
-	int flag=1; 
-	int i; 
-	for(i=0;i<s1->count;i++){
-		if(!contains(s2,s1->items[i])){
-			flag=0;
-			break; 
-		}
-	}
-	return flag; 
-}
-
-int areDisjoint(const SetArray s1,const SetArray s2){
-	int flag=1; 
-	int i; 
-	for(i=0;i<s2->count;i++){
-		if(contains(s1,s2->items[i])){
-			flag=0;
-			break; 
-		}
-	}
-	return flag;
-}
-
-
-//implement remove such that, when you find the item to be removed
-// replace it with the last element
-void removeIt(SetArray s, int elem){
-	int i; 
-	for(i=0;i<s->count;i++){
-		if(elem==s->items[i]){
-			s->items[i] = s->items[s->count-1];
-            (s->count)--;
-			break; 
-		}
-	}
-}
+//
+//
+//int isEmpty(const SetArray s){
+//	int flag=1; 
+//	int i; 
+//	for(i=0;i<s->count;i++){
+//		if(s->items[i]!=0){
+//			flag=0;
+//			break;  
+//		}
+//	}
+//	return flag; 
+//}
+//
+//int contains(SetArray s, int elem){
+//	int flag=0;
+//	int i;
+//	for(i=0;i<s->count;i++){
+//		if(s->items[i]==elem){
+//			flag=1; 
+//			break; 
+//		}
+//	}
+//	return flag; 
+//}
+//
+//int cardinality(const SetArray s){
+//	return s->count;
+//}
+//
+//SetArray getUnion(const SetArray s1,const SetArray s2){
+//	SetArray result = newSetArray(); 
+//	int i;
+//	for(i=0;i<s1->count;i++){
+//		add(result,s1->items[i]);
+//	}
+//	for(i=0;i<s2->count;i++){
+//		add(result,s2->items[i]);
+//	}
+//	return result;
+//}
+//
+//SetArray getIntersection(const SetArray s1,const SetArray s2){
+//	SetArray result = newSetArray(); 
+//	int i; 
+//	for(i=0;i<s1->count;i++){
+//		if(contains(s2,s1->items[i])){
+//			add(result,s1->items[i]);
+//		}
+//	}
+//	return result; 
+//}
+//
+//SetArray getDifference(const SetArray s1,const SetArray s2){
+//	SetArray result = newSetArray(); 
+//	int i;
+//	for(i=0;i<s1->count;i++){
+//		if(!contains(s2,s1->items[i])){
+//			add(result,s1->items[i]);
+//		}
+//	}
+//	return result; 
+//}
+//
+//int isSubset(const SetArray s1,const SetArray s2){
+//	int flag=1; 
+//	int i; 
+//	for(i=0;i<s1->count;i++){
+//		if(!contains(s2,s1->items[i])){
+//			flag=0;
+//			break; 
+//		}
+//	}
+//	return flag; 
+//}
+//
+//int areDisjoint(const SetArray s1,const SetArray s2){
+//	int flag=1; 
+//	int i; 
+//	for(i=0;i<s2->count;i++){
+//		if(contains(s1,s2->items[i])){
+//			flag=0;
+//			break; 
+//		}
+//	}
+//	return flag;
+//}
+//
+//
+////implement remove such that, when you find the item to be removed
+//// replace it with the last element
+//void removeIt(SetArray s, int elem){
+//	int i; 
+//	for(i=0;i<s->count;i++){
+//		if(elem==s->items[i]){
+//			s->items[i] = s->items[s->count-1];
+//            (s->count)--;
+//			break; 
+//		}
+//	}
+//}
 
