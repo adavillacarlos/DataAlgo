@@ -98,7 +98,6 @@ int main(){
 
 	if(p1==NULL && p2==NULL && p3==NULL && p4==NULL)
 		printf("\n\nArrays are all null");
-
 	return 0; 
 }
 
